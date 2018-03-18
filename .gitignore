@@ -1,1 +1,2 @@
-/transcripts
+transcripts/
+__pycache__/
