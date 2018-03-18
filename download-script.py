@@ -44,7 +44,7 @@ def extractLines(page):
     allLines = content.split('\n')
 
     # Only grab characters' lines
-    allLines = list(filter(lambda x: re.match(r'^[A-Z]+:', x), allLines))
+    allLines = list(filter(lambda x: re.match(r'^[A-Z]+:', x) and not x.startswith('DISCLAIMER'), allLines))
     
     # Fix weird apostrophe stuff
     allLines = [line.replace('\x91', "'").replace('\x92', "'") for line in allLines]
@@ -71,13 +71,17 @@ def downloadSeason(season):
     for index, page in enumerate(pages):
         lines = [line + '\n' for line in extractLines(page)]
 
-        with open(os.path.join(seasonPath, 'e{}.txt'.format(index + 1)), 'w') as f:
+        with open(os.path.join(seasonPath, '{}.txt'.format(index + 1)), 'w') as f:
             for line in lines:
                 f.write(line)
 
-downloadSeason('s1')
+def main():
+    for season in seasons:
+        downloadSeason(season)
 
-
+if __name__ == '__main__':
+    buildTranscriptDirs()
+    main()
 
 
 
