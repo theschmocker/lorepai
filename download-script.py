@@ -46,8 +46,8 @@ def extractLines(page):
     # Only grab characters' lines
     allLines = list(filter(lambda x: re.match(r'^[A-Z]+:', x) and not x.startswith('DISCLAIMER'), allLines))
     
-    # Fix weird apostrophe stuff
-    allLines = [line.replace('\x91', "'").replace('\x92', "'") for line in allLines]
+    # Fix weird unicode stuff. There must be a better way to do this
+    allLines = [line.replace('\x91', "'").replace('\x92', "'").replace('\x85', '').replace('\x93', '').replace('\x94', '').replace('\x96', '').replace('\x97', '') for line in allLines]
 
     # Remove non-dialog
     allLines = [re.sub(r'\[.*?\]', '', line) for line in allLines]
@@ -82,11 +82,3 @@ def main():
 if __name__ == '__main__':
     buildTranscriptDirs()
     main()
-
-
-
-
-
-
-
-
