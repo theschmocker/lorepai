@@ -33,14 +33,3 @@ def getAllLines():
     for season in seasons:
         allLines[season] = getLinesInSeason(season)
     return allLines
-
-allLines = getAllLines()
-
-listLines = ''
-for season in seasons:
-    for episode in allLines[season]:
-        listLines += ' '.join(episode)
-
-
-print(listLines.count('\x96'))
-#print([ord(c) for c in listLines])
