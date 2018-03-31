@@ -15,15 +15,25 @@ seasons = [
 
 allLines = load_transcript.getAllLines()
 
-listLines = ''
+listLines = []
 for season in seasons:
     for episode in allLines[season]:
-        listLines += ' '.join(episode)
+        listLines += episode
 
-unique_names = [name.replace(':', '') for name in list(set(re.findall(r'[A-Z)]+:', listLines)))]
+def get_names(lines):
+    all_names = []
 
-with open('names.txt', 'w') as f:
-    for name in unique_names:
+    for line in lines:
+        all_names += re.findall(r'^[A-Z]+:', line)
+
+    return [name.replace(':', '') for name in set(all_names)]
+
+#unique_names = [name.replace(':', '') for name in list(set(re.findall(r'[A-Z)]+:', listLines)))]
+# 
+
+
+all_names = get_names(listLines)
+
+with open('names2.txt', 'w') as f:
+    for name in all_names:
         f.write(f'{name}\n')
-            
-
